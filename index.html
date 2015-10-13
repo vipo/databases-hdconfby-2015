@@ -179,9 +179,10 @@
     <section class="slide">
       <h2>antirez vs. aphyr</h2>
       <ul>
-        <li>Да, можем потерять данные</li>
+        <li class="slide">Да, можем потерять данные</li>
         <li class="slide">Некотырые данные можно терять</li>
-        <li class="slide">Ещё ни разу не теряли, наверное :)</li>
+        <li class="slide">Ещё ни разу не теряли</li>
+        <li class="slide">Я знаю условия, при которых они теряются</li>
       </ul>
     </section>
 
@@ -213,6 +214,84 @@
         <li class="slide">Разность множеств &mdash; элементы с весом &lt; N</li>
         <li class="slide">Обманули теорию: посчитали за O(log(N)) то, что делается за O(m+n)</li>
       </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Aerospike</h2>
+      <img src="./img/aerospike.jpg"/>
+      <div>Клиновоздушный двигатель</div>
+    </section>
+
+    <section class="slide">
+      <h2>Чего наобещали</h2>
+      <ul>
+        <li>Супермаленькие latency</li>
+        <li>Кластер все сам делает</li>
+        <li>Large Data Types</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Перенесли с Кассандры один в один</h2>
+      <img src="./img/cassandra.jpg"/>
+    </section>
+
+    <section class="slide">
+      <h2>Беда не приходит одна</h2>
+      <ul>
+        <li>Если создаёт первичный индекс за 1 час, то вторичный &mdash; 4 часа</li>
+        <li>Query (по вторичному индексу) не отображаются AMC</li>
+        <li>Асинхроннный java драйвер не работает под нагрузкой (20k/s)</li>
+        <li>Hot-key &mdash; беда</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+    	<h2>Aerospike хорош если</h2>
+    	<ol>
+    		<li class="slide">По несоставному ключу сахранено много конечных данных</li>
+    	</ol>
+    	<div class="slide"><center>конец списка</center></div>
+    </section>
+
+    <section class="slide">
+    	<h2>Large Data Types</h2>
+    	<ul>
+    		<li class="slide">LargeList &mdash; отсортированный по ключу список</li>
+    		<li class="slide">остальные структуры &mdash; слава богу устарели</li>
+    		<li class="slide">Имплементация на lua, <em>очень</em> сырая</li>
+    		<li class="slide">От некоторых операции сервер (3.6.0 &ndash; 3.6.2) падает</li>
+    	</ul>
+    </section>
+
+    <section class="slide">
+    	<h2>Large Data Types</h2>
+    	<blockquote>
+    		<p>The only problem with Microsoft is they just have no taste</p>
+  			<p><cite>Steve Jobs</cite></p>
+    	</blockquote>
+    </section>
+
+    <section class="slide">
+    	<h2>Cluster</h2>
+    	<ul>
+    		<li class="slide">Прекрасно работает, если нет миграции <em>части</em> данных</li>
+    		<li class="slide">Лучше не трогать (не добавлять ноды)</li>
+    		<li class="slide">Дайте идеальную сеть</li>
+    	</ul>
+    </section>
+
+    <section class="slide">
+    	<h2>Итог</h2>
+    	<ul>
+    		<li class="slide">Cassandra прекрасна, если не требовать того для чего не предназначена</li>
+    		<li class="slide">Redis &mdash; понятный сервер структур данных, из которых можно слепить космический корабль, который обязательный взлетит</li>
+    		<li class="slide">Все слухи, которые вы слышали про Aerospike, скорее всего правда</li>
+    	</ul>
+    </section>
+
+    <section class="slide">
+      <h1>Спасибо!</h1>
     </section>
 
     <!-- End slides. -->
