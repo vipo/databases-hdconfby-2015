@@ -41,21 +41,32 @@
     <section class="slide">
       <h2>Кто я, что я</h2>
       <ul>
-        <li>Вячеслав Поздняков</li>
-        <li>Программист в Adform</li>
-        <li>Работаю в отделе сервинга</li>
-        <li>Программирую на Scala</li>
-        <li>Работал с Cassandra, Redis, Aerospike</li>
+        <div class="slide">
+          <li>Вячеслав Поздняков</li>
+        </div>
+        <div class="slide">
+          <li>Программист в Adform</li>
+          <li>Работаю в отделе сервинга</li>
+          <li>Программирую на Scala</li>
+        </div>
+        <div class="slide">
+          <li>Работал с Cassandra, Redis, Aerospike</li>
+        </div>
       </ul>
     </section>
 
     <section class="slide">
       <h2>Cassandra</h2>
+      <img src="./img/cassandra.jpg" />
+    </section>
+
+    <section class="slide">
+      <h2>Cassandra Ring</h2>
       <img src="./img/ring.jpg" />
     </section>
 
     <section class="slide">
-      <h2>Real Cassandra ring</h2>
+      <h2>Real Cassandra Ring</h2>
       <img src="./img/ring1.svg" height="500" width="500" />
     </section>
 
@@ -87,8 +98,10 @@
     <section class="slide">
       <h2>Лечение / Калечение</h2>
       <div>CREATE TABLE t (a int, b int, c int, d int, PRIMARY KEY(a, b, c));</div>
-      <div>меняем на</div>
-      <div>CREATE TABLE t (a int, b int, c int, d int, PRIMARY KEY((a, b), c);</div>
+      <div class="slide">
+        <div>меняем на</div>
+        <div>CREATE TABLE t (a int, b int, c int, d int, PRIMARY KEY((a, b), c);</div>
+      </div>
     </section>
 
     <section class="slide">
@@ -132,7 +145,7 @@
     <section class="slide">
       <h2>Persistence</h2>
       <ul>
-        <li>AOF &mdash; пишем лог, иногда сжимаем</li>
+        <li>AOF &mdash; пишем лог, иногда оптимизируем (сжимаем)</li>
         <li>RDB &mdash; просто снимок данных</li>
       </ul>
     </section>
@@ -147,10 +160,59 @@
     <section class="slide">
       <h2>Что пробовали</h2>
       <ul>
-        <li>Настройка fsync параметров</li>
-        <li>Читать со slave'a</li>
+        <li class="slide">Настройка fsync параметров</li>
+        <li class="slide">Настройка fsync параметров AOF</li>
+        <li class="slide">Читать со slave'a</li>
       </ul>
-      <div>Но ничего и не могло помочь: мы пишем больше чем читаем</div>
+      <div class="slide">Но ничего и не могло помочь: мы пишем больше чем читаем</div>
+    </section>
+
+    <section class="slide">
+      <h2>Persistent slave</h2>
+      <ul>
+        <li>Работаем с мастером, который не пишет на диск, вообще</li>
+        <li>На диск пишет слейв, данные поступают с мастера</li>
+        <li>Сентинел конфигурирует ноды</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>antirez vs. aphyr</h2>
+      <ul>
+        <li>Да, можем потерять данные</li>
+        <li class="slide">Некотырые данные можно терять</li>
+        <li class="slide">Ещё ни разу не теряли, наверное :)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Борьба со сложностью</h2>
+      <div>Заменить одно множество другим, что может быть проще?</div>
+      <ul>
+        <li class="slide">RENAME &mdash; скрытый DEL &mdash; O(n)</li>
+        <li class="slide">SDIFF &mdash; O (n + m)</li>
+        <li class="slide">SDIFF на слейвах &mdash; можно, но сложно</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Тянем время</h2>
+      <ul>
+        <li>Вместо одной большой операции лучше много маленьких</li>
+        <li>Всегда можно пожертвовать записью ради чтения/запроса</li>
+        <li>А может подойдет eventual consistency данных?</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Пример</h2>
+      <ul>
+        <li class="slide">SET меняем на SORTED SET</li>
+        <li class="slide">Добавление ухудшается: O(log(N)) vs. O(1)</li>
+        <li class="slide">ZADD делаем с весом N, большим, чем при преждних добавлениеях</li>
+        <li class="slide">Разность множеств &mdash; элементы с весом &lt; N</li>
+        <li class="slide">Обманули теорию: посчитали за O(log(N)) то, что делается за O(m+n)</li>
+      </ul>
     </section>
 
     <!-- End slides. -->
