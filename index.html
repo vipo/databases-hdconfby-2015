@@ -18,7 +18,7 @@
   <link rel="stylesheet" media="screen" href="extensions/scale/deck.scale.css">
 
   <!-- Style theme. More available in /themes/style/ or create your own. -->
-  <link rel="stylesheet" media="screen" href="themes/style/web-2.0.css">
+  <link rel="stylesheet" media="screen" href="themes/style/swiss.css">
 
   <!-- Transition theme. More available in /themes/transition/ or create your own. -->
   <link rel="stylesheet" media="screen" href="themes/transition/fade.css">
@@ -35,7 +35,7 @@
     <!-- Begin slides. Just make elements with a class of slide. -->
 
     <section class="slide">
-      <h1>Базы данных. На лицо добрые, ужасные внутри</h1>
+      <img src="./img/title.jpg"/>
     </section>
 
     <section class="slide">
@@ -62,12 +62,12 @@
 
     <section class="slide">
       <h2>Cassandra Ring</h2>
-      <img src="./img/ring.jpg" />
+      <img src="./img/ring.jpg" heigth="400"/>
     </section>
 
     <section class="slide">
       <h2>Real Cassandra Ring</h2>
-      <img src="./img/ring1.svg" height="500" width="500" />
+      <img src="./img/ring1.svg" height="400" />
     </section>
 
     <section class="slide">
@@ -92,7 +92,7 @@
 
     <section class="slide">
       <h2>Hot (and big) spot</h2>
-      <img src="./img/ring2.svg" height="500" widht="500"/>
+      <img src="./img/ring2.svg" height="400"/>
     </section>
 
     <section class="slide">
@@ -115,8 +115,7 @@
 
     <section class="slide">
       <h2>Redis</h2>
-      <div> ... потому что могли</div>
-      <img src="./img/reddish.jpg"/>
+      <img src="./img/reddish.jpg" height="400"/>
     </section>
 
     <section class="slide">
@@ -139,7 +138,7 @@
 
     <section class="slide">
       <h2>Redis Sentinel</h2>
-      <img src="./img/sentinel.jpg"/>
+      <img src="./img/sentinel.jpg" height="400"/>
     </section>
 
     <section class="slide">
@@ -151,9 +150,9 @@
     </section>
 
     <section class="slide">
-      <h2>Всё бы ничего</h2>
-      <blockquote cite="http://oldblog.antirez.com/post/redis-persistence-demystified.html">
-  Fsync() also blocks the process for all the time needed to complete the write, and if this is not enough, on Linux it will also block all the other threads that are writing against the same file. 
+      <h2>Antirez о fsync()</h2>
+      <blockquote>
+  ... on Linux it will also block all the other threads.
       </blockquote>
     </section>
 
@@ -218,8 +217,8 @@
 
     <section class="slide">
       <h2>Aerospike</h2>
-      <img src="./img/aerospike.jpg"/>
-      <div>Клиновоздушный двигатель</div>
+      <img src="./img/aerospike.jpg" height="300"/>
+      <div><center><small>Клиновоздушный двигатель</small></center></div>
     </section>
 
     <section class="slide">
@@ -233,7 +232,7 @@
 
     <section class="slide">
       <h2>Перенесли с Кассандры один в один</h2>
-      <img src="./img/cassandra.jpg"/>
+      <img src="./img/secondary.jpg"/>
     </section>
 
     <section class="slide">
@@ -242,7 +241,7 @@
         <li>Если создаёт первичный индекс за 1 час, то вторичный &mdash; 4 часа</li>
         <li>Query (по вторичному индексу) не отображаются AMC</li>
         <li>Асинхроннный java драйвер не работает под нагрузкой (20k/s)</li>
-        <li>Hot-key &mdash; беда</li>
+        <li>Hot-key &mdash; просто трагедия</li>
       </ul>
     </section>
 
@@ -255,20 +254,27 @@
     </section>
 
     <section class="slide">
+		<h2>Что пришлось делать</h2>
+		<ul>
+			<li>Своя имплементация хеш-таблицы</li>
+			<li>TTL элементов в хеш-таблице</li> 
+		</ul>    	
+    </section>
+
+    <section class="slide">
     	<h2>Large Data Types</h2>
     	<ul>
-    		<li class="slide">LargeList &mdash; отсортированный по ключу список</li>
-    		<li class="slide">остальные структуры &mdash; слава богу устарели</li>
+    		<li class="slide">LList &mdash; отсортированный по ключу список</li>
+    		<li class="slide">Oстальные структуры (например, LMap), слава богу, устарели</li>
     		<li class="slide">Имплементация на lua, <em>очень</em> сырая</li>
     		<li class="slide">От некоторых операции сервер (3.6.0 &ndash; 3.6.2) падает</li>
     	</ul>
     </section>
 
     <section class="slide">
-    	<h2>Large Data Types</h2>
+    	<h2>Steve Jobs</h2>
     	<blockquote>
-    		<p>The only problem with Microsoft is they just have no taste</p>
-  			<p><cite>Steve Jobs</cite></p>
+    		The only problem with Microsoft is they just have no taste
     	</blockquote>
     </section>
 
@@ -276,7 +282,7 @@
     	<h2>Cluster</h2>
     	<ul>
     		<li class="slide">Прекрасно работает, если нет миграции <em>части</em> данных</li>
-    		<li class="slide">Лучше не трогать (не добавлять ноды)</li>
+    		<li class="slide">Необходимо помолиться перед добавлением ноды</li>
     		<li class="slide">Дайте идеальную сеть</li>
     	</ul>
     </section>
@@ -284,14 +290,15 @@
     <section class="slide">
     	<h2>Итог</h2>
     	<ul>
-    		<li class="slide">Cassandra прекрасна, если не требовать того для чего не предназначена</li>
+    		<li class="slide">Cassandra прекрасна, если не требовать того, для чего она не предназначена</li>
     		<li class="slide">Redis &mdash; понятный сервер структур данных, из которых можно слепить космический корабль, который обязательный взлетит</li>
     		<li class="slide">Все слухи, которые вы слышали про Aerospike, скорее всего правда</li>
     	</ul>
     </section>
 
     <section class="slide">
-      <h1>Спасибо!</h1>
+      <h2>Спасибо!</h2>
+      <div>Twitter: <a href="https://twitter.com/poznia">@poznia</a></div>
     </section>
 
     <!-- End slides. -->
