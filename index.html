@@ -279,6 +279,19 @@
     </section>
 
     <section class="slide">
+    	<h2>Несогласованность</h2>
+    	<ul>
+    		<li class="slide">LList.scan <em>иногда</em> падает с ошибкой "bad argument #1 to 'append'"</li>
+    		<li class="slide">При этом Llist.range(min, max) отрабатывает идеально</li>
+    		<li class="slide">Результат LList.scan/range: либо null, либо исключение</li>
+    		<li class="slide">LMap.remove кидает ислючение если ключ не найден</li>
+    		<li class="slide">LMap.remove принимает 1 аргумент</li>
+    		<li class="slide">Для LDT нет асинхронного API</li>
+    		<li class="slide">Уметь читать lua код</li>
+    	</ul>
+    </section>
+
+    <section class="slide">
     	<h2>Cluster</h2>
     	<ul>
     		<li class="slide">Прекрасно работает, если нет миграции <em>части</em> данных</li>
@@ -299,6 +312,7 @@
     <section class="slide">
       <h2>Спасибо!</h2>
       <div>Twitter: <a href="https://twitter.com/poznia">@poznia</a></div>
+      <div>Ссылка: <a href="http://vipo.github.io/databases-hdconfby-2015"/>http://vipo.github.io/databases-hdconfby-2015</a></div>
     </section>
 
     <!-- End slides. -->
