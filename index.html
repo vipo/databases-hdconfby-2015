@@ -50,6 +50,9 @@
     <section class="slide">
       <h2>Cassandra</h2>
       <img src="./img/cassandra.jpg" />
+      <a href="http://www.slideshare.net/HDConf/donatas-maionis-building-low-latency-web-apis">
+      	Donatas Mažionis: "Building low latency web APIs"
+      </a>
     </section>
 
     <section class="slide">
@@ -58,7 +61,7 @@
     </section>
 
     <section class="slide">
-      <h2>Настоящее кольцо Cassandra</h2>
+      <h2>Кольцо Cassandra</h2>
       <img src="./img/ring1.svg" height="400" />
     </section>
 
@@ -186,7 +189,13 @@
         <li class="slide">Да, можем потерять данные</li>
         <li class="slide">Некотырые данные можно терять</li>
         <li class="slide">Ещё ни разу не теряли</li>
-        <li class="slide">Я знаю условия, при которых они теряются</li>
+        <li class="slide">Я знаю условия, при которых они теряются, например:
+        	<ul>
+        		<li>Медленная сеть</li>
+        		<li>Все данные между fsync'ами</li>
+        		<li class="slide">... другие условия, о которых другие БД просто умалчивают</li>
+        	</ul>
+        </li>
       </ul>
     </section>
 
@@ -215,7 +224,7 @@
         <li class="slide">Добавление ухудшается: O(log(N)) vs. O(1)</li>
         <li class="slide">ZADD делаем с весом N, большим, чем при преждних добавлениеях</li>
         <li class="slide">Разность множеств &mdash; элементы с весом &lt; N (ZRANGEBYSCORE)</li>
-        <li class="slide">"Обманули"" теорию: посчитали за O(log(N)) то, что делается за O(m+n)</li>
+        <li class="slide">"Обманули" теорию: посчитали за O(log(N)+K) то, что делается за O(N+M)</li>
       </ul>
     </section>
 
