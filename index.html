@@ -150,18 +150,17 @@
     </section>
 
     <section class="slide">
-      <h2>Antirez о fsync()</h2>
-      <blockquote>fsync() on a different thread: apparently a useless trick</blockquote>
+    	<h2>fsync</h2>
+    	<ul>
+    		<li>После каждой операции</li>
+    		<li>Раз в секунду</li>
+    		<li>Никогда</li>
+    	</ul>
     </section>
 
     <section class="slide">
-      <h2>Что пробовали</h2>
-      <ul>
-        <li class="slide">Настройка fsync параметров</li>
-        <li class="slide">Настройка fsync параметров AOF</li>
-        <li class="slide">Читать со slave'a</li>
-      </ul>
-      <div class="slide">Но ничего и не могло помочь: мы пишем больше чем читаем</div>
+      <h2>Antirez о fsync()</h2>
+      <blockquote>fsync() on a different thread: apparently a useless trick</blockquote>
     </section>
 
     <section class="slide">
