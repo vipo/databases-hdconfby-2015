@@ -98,11 +98,18 @@
 
     <section class="slide">
       <h2>A что совсем плохо</h2>
-      <div>Время отзыва multi-get / работа со множествами</div>
+      <div>Multi-get / работа со множествами</div>
       <ul>
         <li>SELECT * WHERE k in (1, ... n)</li>
         <li>SELECT * WHERE k = 1; ...; SELECT * WHERE k = n</li>
       </ul>
+      <div class="slide">
+      	Нет меньшего зла:
+      	<ul>
+      	  <li>Всё множество на одной ноде &mdash; сильно загруженная нода</li>
+      	  <li>Множество на всех нодах &mdash; ждём самую медленную ноду (привет, GC)</li>
+      	</ul>
+      </div>
     </section>
 
     <section class="slide">
@@ -113,6 +120,7 @@
     <section class="slide">
       <h2>Что нам нужно</h2>
       <ul>
+      	<li>Работа с множествами</li>
         <li>Аварийное переключение</li>
         <li>Сохранение на диск</li>
         <li>Супер быстрый</li>
@@ -122,8 +130,9 @@
     <section class="slide">
       <h2>Что есть на самом деле</h2>
       <ul>
+        <li>Работа с множествами из коробки</li>
         <li>Аварийное переключение работает, если настроить</li>
-        <li>Сохранение на диск ничего не портит, если без перфекционизма</li>
+        <li>Сохранение на диск почти ничего не портит</li>
         <li>Супер быстрый, если не решать проблемы "в лоб"</li>
       </ul>
     </section>
@@ -144,10 +153,16 @@
 
     <section class="slide">
     	<h2>fsync</h2>
+    	<div>AOF</div>
     	<ul>
-    		<li>После каждой операции</li>
-    		<li>Раз в секунду</li>
-    		<li>Как повезёт</li>
+    	  <li>always</li>
+    	  <li>everysec</li>
+    	  <li>no</li>
+    	</ul>
+    	<div>AOF rewrite</div>
+    	<ul>
+    	  <li>no-appendfsync-on-rewrite</li>
+    	  <li>aof-rewrite-incremental-fsync</li>
     	</ul>
     </section>
 
@@ -179,7 +194,7 @@
       <h2>Борьба со сложностью</h2>
       <div>Заменить одно множество другим, что может быть проще?</div>
       <ul>
-        <li class="slide">RENAME &mdash; скрытый DEL &mdash; O(n)</li>
+        <li class="slide">RENAME &mdash; скрытый DEL &mdash; O(n) + деаллокация памяти</li>
         <li class="slide">SDIFF &mdash; O (n + m)</li>
         <li class="slide">SDIFF на слейвах &mdash; можно, но сложно</li>
       </ul>
@@ -189,8 +204,7 @@
       <h2>Тянем время</h2>
       <ul>
         <li>Вместо одной большой операции лучше много маленьких</li>
-        <li>Всегда можно пожертвовать записью ради чтения/запроса</li>
-        <li>А может подойдет eventual consistency данных?</li>
+        <li>Пишем так, чтоб было удобнее читать</li>
       </ul>
     </section>
 
@@ -200,8 +214,8 @@
         <li class="slide">SET меняем на SORTED SET</li>
         <li class="slide">Добавление ухудшается: O(log(N)) vs. O(1)</li>
         <li class="slide">ZADD делаем с весом N, большим, чем при преждних добавлениеях</li>
-        <li class="slide">Разность множеств &mdash; элементы с весом &lt; N</li>
-        <li class="slide">Обманули теорию: посчитали за O(log(N)) то, что делается за O(m+n)</li>
+        <li class="slide">Разность множеств &mdash; элементы с весом &lt; N (ZRANGEBYSCORE)</li>
+        <li class="slide">"Обманули"" теорию: посчитали за O(log(N)) то, что делается за O(m+n)</li>
       </ul>
     </section>
 
@@ -223,10 +237,10 @@
     <section class="slide">
       <h2>Беда не приходит одна</h2>
       <ul>
+        <li>Очень легко потратить всю память</li>
         <li>Если создаёт первичный индекс за 1 час, то вторичный &mdash; 4 часа</li>
-        <li>Query (по вторичному индексу) не отображаются AMC</li>
         <li>Асинхроннный java драйвер не работает под нагрузкой (20k/s)</li>
-        <li>Hot-key &mdash; просто трагедия</li>
+        <li>Hot-key &mdash; просто трагедия для нашего бизнеса</li>
         <li>Первичный индекс не больше 256GB</li>
       </ul>
     </section>
@@ -271,9 +285,9 @@
     		<li class="slide">При этом Llist.range(min, max) отрабатывает идеально</li>
     		<li class="slide">Результат LList.scan/range: либо null, либо исключение</li>
     		<li class="slide">LMap.remove кидает ислючение если ключ не найден</li>
-    		<li class="slide">LMap.remove принимает 1 аргумент</li>
-    		<li class="slide">Для LDT нет асинхронного API</li>
-    		<li class="slide">Уметь читать lua код</li>
+    		<li class="slide">LMap.remove принимает 1 аргумент (привет, hot-key)</li>
+    		<li class="slide">Для LDT нет асинхронного API (это же opensource!)</li>
+    		<li class="slide">Учимся читать lua код (файлы по 6k loc)</li>
     	</ul>
     </section>
 
