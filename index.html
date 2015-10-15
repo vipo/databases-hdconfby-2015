@@ -41,12 +41,9 @@
     <section class="slide">
       <h2>Кто я, что я</h2>
       <ul>
-        <li>Программист в Adform</li>
-        <li>Работаю в отделе сервинга</li>
-        <li>Программирую на Scala</li>
-        <div class="slide">
-          <li>Работал с Cassandra, Redis, Aerospike</li>
-        </div>
+	    <li class="slide">Программист в Adform (реклама в интенете, весь спектр услуг)</li>
+        <li class="slide">Работаю в отделе сервинга (показываем баннеры)</li>
+        <li class="slide">Работал с Cassandra, Redis, Aerospike</li>
       </ul>
     </section>
 
@@ -61,7 +58,7 @@
     </section>
 
     <section class="slide">
-      <h2>Real Cassandra Ring</h2>
+      <h2>Настоящее кольцо Cassandra</h2>
       <img src="./img/ring1.svg" height="400" />
     </section>
 
@@ -69,8 +66,8 @@
       <h2>Что хорошо</h2>
       <ul>
         <li>Может хранить тьму данных</li>
-        <li>Масштабируется</li>
-        <li>CQL / составные ключи</li>
+        <li>Масштабируется (место/производительность)</li>
+        <li>Составные ключи</li>
         <li>Она понятна, много книг</li>
         <li>Достаточно стабильна (падает раз в год)</li>
         <li>Работает на любом железе</li>
@@ -81,7 +78,7 @@
       <h2>Что плохо</h2>
       <ul>
         <li>Java GC</li>
-        <li>Легко перегреть один элемент в кольце</li>
+        <li>Легко перегреть один элемент в кольце (много данных по некому ключу)</li>
       </ul>
     </section>
 
@@ -114,7 +111,7 @@
     </section>
 
     <section class="slide">
-      <h2>Чего обещают</h2>
+      <h2>Что нам нужно</h2>
       <ul>
         <li>Аварийное переключение</li>
         <li>Сохранение на диск</li>
@@ -139,9 +136,10 @@
     <section class="slide">
       <h2>Persistence</h2>
       <ul>
-        <li>AOF &mdash; пишем лог, иногда оптимизируем (сжимаем)</li>
         <li>RDB &mdash; просто снимок данных</li>
+        <li>AOF &mdash; пишем лог, иногда оптимизируем (сжимаем)</li>
       </ul>
+      <div>Выполняются асинхронно</div>
     </section>
 
     <section class="slide">
@@ -149,7 +147,7 @@
     	<ul>
     		<li>После каждой операции</li>
     		<li>Раз в секунду</li>
-    		<li>Никогда</li>
+    		<li>Как повезёт</li>
     	</ul>
     </section>
 
@@ -168,7 +166,7 @@
     </section>
 
     <section class="slide">
-      <h2>antirez vs. aphyr</h2>
+      <h2>Подозрительно?</h2>
       <ul>
         <li class="slide">Да, можем потерять данные</li>
         <li class="slide">Некотырые данные можно терять</li>
@@ -223,17 +221,13 @@
     </section>
 
     <section class="slide">
-      <h2>Перенесли с Кассандры один в один</h2>
-      <img src="./img/secondary.jpg"/>
-    </section>
-
-    <section class="slide">
       <h2>Беда не приходит одна</h2>
       <ul>
         <li>Если создаёт первичный индекс за 1 час, то вторичный &mdash; 4 часа</li>
         <li>Query (по вторичному индексу) не отображаются AMC</li>
         <li>Асинхроннный java драйвер не работает под нагрузкой (20k/s)</li>
         <li>Hot-key &mdash; просто трагедия</li>
+        <li>Первичный индекс не больше 256GB</li>
       </ul>
     </section>
 
@@ -284,19 +278,10 @@
     </section>
 
     <section class="slide">
-    	<h2>Cluster</h2>
-    	<ul>
-    		<li class="slide">Прекрасно работает, если нет миграции <em>части</em> данных</li>
-    		<li class="slide">Необходимо помолиться перед добавлением ноды</li>
-    		<li class="slide">Дайте идеальную сеть</li>
-    	</ul>
-    </section>
-
-    <section class="slide">
     	<h2>Итог</h2>
     	<ul>
     		<li class="slide">Cassandra прекрасна, если не требовать того, для чего она не предназначена</li>
-    		<li class="slide">Redis &mdash; понятный сервер структур данных, из которых можно слепить космический корабль, который обязательный взлетит</li>
+    		<li class="slide">Redis &mdash; понятный сервер структур данных, из которых можно слепить космический корабль (в хорошем смысле)</li>
     		<li class="slide">Все слухи, которые вы слышали про Aerospike, скорее всего правда</li>
     	</ul>
     </section>
