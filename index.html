@@ -154,26 +154,6 @@
     </section>
 
     <section class="slide">
-    	<h2>fsync</h2>
-    	<div>AOF</div>
-    	<ul>
-    	  <li>always</li>
-    	  <li>everysec</li>
-    	  <li>no</li>
-    	</ul>
-    	<div>AOF rewrite</div>
-    	<ul>
-    	  <li>no-appendfsync-on-rewrite</li>
-    	  <li>aof-rewrite-incremental-fsync</li>
-    	</ul>
-    </section>
-
-    <section class="slide">
-      <h2>Antirez о fsync()</h2>
-      <blockquote>fsync() on a different thread: apparently a useless trick</blockquote>
-    </section>
-
-    <section class="slide">
       <h2>Persistent slave</h2>
       <ul>
         <li>Работаем с мастером, который не пишет на диск, вообще</li>
